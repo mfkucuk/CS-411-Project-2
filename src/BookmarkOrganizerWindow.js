@@ -1,6 +1,8 @@
 class BookmarkOrganizerWindow {
     constructor() {
         this.folders = [];
+
+        this.rootFolder = this.createFolder("Root");
     }
 
     createFolder(name) {
@@ -14,6 +16,6 @@ class BookmarkOrganizerWindow {
     }
 
     addVisualBrackets() {
-        
+
     }
 }

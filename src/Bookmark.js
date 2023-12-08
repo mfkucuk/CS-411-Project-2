@@ -1,9 +1,10 @@
-class Bookmark {
-    constructor(url, name, icon, folder) {
+class Bookmark extends BookmarkExplorerElement {
+    constructor(url, name, icon) {
+
+        super(name);
+
         this.url = url;
-        this.name = name;
         this.icon = icon;
-        this.folder = folder;
     }
 
     open() {

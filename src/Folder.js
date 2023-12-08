@@ -1,25 +1,29 @@
-class Folder {
-    constructor(name) {
-        this.name = name;
-        this.bookmarks = [];
+class Folder extends BookmarkExplorerElement {
+    constructor(name, folder) {
+        
+        super(name, folder);
+
+        this.elements = [];
     }
 
-    addBookmark(bookmark) {
-        this.bookmarks.push(bookmark);
-        bookmark.folder = this;
+    addElement(element) {
+        this.elements.push(element);
+        element.folder = this;
+
+        Browser.get().getBookmarkBar().addVisualBookmark(element);
     }
 
-    removeBookmark(bookmark) {
-        const index = this.bookmarks.indexOf(bookmark);
+    removeElement(element) {
+        const index = this.elements.indexOf(element);
 
         if (index == 1) {
             return;
         }
 
-        this.bookmarks.splice(index, 1);
+        this.elements.splice(index, 1);
     }
 
-    organizeBookmarks() {
+    organizeElements() {
         
     }
 }
