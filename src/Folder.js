@@ -9,7 +9,12 @@ class Folder extends BookmarkExplorerElement {
     addElement(element) {
         this.elements.push(element);
         element.folder = this;
-        Browser.get().getBookmarkBar().addVisualBookmark(element);
+        if (element instanceof Folder){
+            Browser.get().getBookmarkBar().addVisualFolder(element);
+        } else
+        {
+            Browser.get().getBookmarkBar().addVisualBookmark(element);
+        } 
     }
 
     removeElement(element) {

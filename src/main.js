@@ -5,17 +5,31 @@ window.onload = () => {
     const addButton = document.getElementById('addBookmarkBtn');
     const searchBar = document.getElementById('searchInput');
     const bookmarkTitle = document.getElementById('bookmarkTitle');
+    const folderBtn = document.getElementById('folderBtn');
 
     addButton.addEventListener('click', (event) => {
-
         Browser.get().getOrganizerWindow().rootFolder.addElement(
             new Bookmark(Browser.get().currentPage.url, bookmarkTitle.value, "icon")
             );
+        bookmarkTitle.value = ""    
     });
+
+    folderBtn.addEventListener('click', (event) => {
+        Browser.get().getOrganizerWindow().rootFolder.addElement(
+            Browser.get().getOrganizerWindow().createFolder('New Folder')
+        );
+        console.log('folder added');
+    });
+
 }
 
 function togglePopup() {
     const popupContainer = document.getElementById('popupContainer');
+    popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
+}
+
+function folderPopup() {
+    const popupContainer = document.getElementById('folderContainer');
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
