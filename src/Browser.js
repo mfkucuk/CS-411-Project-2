@@ -5,6 +5,9 @@ class Browser {
         this.organizerWindow = new BookmarkOrganizerWindow();
 
         this.currentPage = null;
+        this.allPages = {};
+
+
     }
 
     static get() {
@@ -24,6 +27,22 @@ class Browser {
     }
 
     open(page) {
+
+        if (typeof page == 'string') 
+        {
+            if (typeof this.allPages[page] == 'undefined') 
+            {
+                return;
+            }
+            else 
+            {
+                page = this.allPages[page];
+            }
+        }
+        
+        this.currentPage = page;
+        this.allPages[page.url] = page;
+
         const pageContainer = document.getElementById('pageContainer');
 
         if (pageContainer.childNodes.length != 0) 

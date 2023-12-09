@@ -31,7 +31,7 @@ class BookmarkBar {
         bookmarkButton.href = bookmark.url;
         bookmarkButton.addEventListener('click', () => {
             // Handle button click event, if needed
-            console.log(`Button clicked: ${bookmark.name}`);
+            Browser.get().open(bookmark.url);
         });
     
         bookmarkBar.appendChild(bookmarkButton);
