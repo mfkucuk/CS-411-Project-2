@@ -25,6 +25,21 @@ class BookmarkBar {
         this.visible = false;
     }
 
+
+    addBracket(){
+        if (!this.visible) {
+            return;
+        }
+     
+        const bracket = document.createElement('div');
+        bracket.className = 'bookmark-bracket'; 
+        bracket.draggable = true;
+        bracket.textContent = '|'; 
+
+        this.domElement.appendChild(bracket);
+
+    }
+
     addVisualFolder(folder) {
         if (!this.visible) {
             return;
@@ -49,7 +64,7 @@ class BookmarkBar {
                 popup.appendChild(button);
               });
         }))
-        
+
         folderButton.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData("text", event.target.id);
         });

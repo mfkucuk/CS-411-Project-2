@@ -11,10 +11,13 @@ class Folder extends BookmarkExplorerElement {
         element.folder = this;
         if (element instanceof Folder){
             Browser.get().getBookmarkBar().addVisualFolder(element);
-        } else
+        } else if (element instanceof Bookmark)
         {
             Browser.get().getBookmarkBar().addVisualBookmark(element);
         } 
+        else{
+            Browser.get().getBookmarkBar().addBracket();
+        }
     }
 
     removeElement(element) {

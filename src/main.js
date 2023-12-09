@@ -6,6 +6,7 @@ window.onload = () => {
     const searchBar = document.getElementById('searchInput');
     const bookmarkTitle = document.getElementById('bookmarkTitle');
     const folderBtn = document.getElementById('folderBtn');
+    const bracketBtn = document.getElementById('bracketBtn');
 
     addButton.addEventListener('click', (event) => {
         Browser.get().getOrganizerWindow().rootFolder.addElement(
@@ -20,6 +21,14 @@ window.onload = () => {
         );
         console.log('folder added');
     });
+
+    bracketBtn.addEventListener('click', (event) => {
+        Browser.get().getOrganizerWindow().rootFolder.addElement(
+            new BookmarkExplorerElement('bracket')
+        );
+    });
+
+
 
 }
 
