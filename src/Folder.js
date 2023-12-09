@@ -9,7 +9,7 @@ class Folder extends BookmarkExplorerElement {
     addElement(element) {
         this.elements.push(element);
         element.folder = this;
-
+        console.log(element.name);
         Browser.get().getBookmarkBar().addVisualBookmark(element);
     }
 

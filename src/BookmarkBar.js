@@ -25,10 +25,15 @@ class BookmarkBar {
             return;
         }
 
-        const bookmarkElement = document.createElement('div');
-        bookmarkElement.className = 'bookmark';
-        bookmarkElement.textContent = bookmark.title;
-        bookmarkElement.href = bookmark.url;
-        bookmarkBar.appendChild(bookmarkElement);
+        const bookmarkButton = document.createElement('button');
+        bookmarkButton.className = 'bookmark';
+        bookmarkButton.textContent = bookmark.name;
+        bookmarkButton.href = bookmark.url;
+        bookmarkButton.addEventListener('click', () => {
+            // Handle button click event, if needed
+            console.log(`Button clicked: ${bookmark.name}`);
+        });
+    
+        bookmarkBar.appendChild(bookmarkButton);
     }
 }

@@ -7,7 +7,8 @@ window.onload = () => {
     const bookmarkTitle = document.getElementById('bookmarkTitle');
 
     addButton.addEventListener('click', (event) => {
-        Browser.get().getOrganizerWindow().rootFolder.addElement(new Bookmark(bookmarkTitle.ariaValueText));
+
+        Browser.get().getOrganizerWindow().rootFolder.addElement(new Bookmark("placeholder url", bookmarkTitle.value, "icon"));
     });
 }
 
