@@ -4,6 +4,8 @@ class BookmarkBar {
         this.bookmarks = [];
         this.domElement = document.getElementById('bookmarkBar');
 
+        this.elementList = [];
+
         // Variable to store the order of bookmarks
         this.bookmarkOrder = [];
 
@@ -35,8 +37,11 @@ class BookmarkBar {
         bracket.className = 'bookmark-bracket'; 
         bracket.draggable = true;
         bracket.textContent = '|'; 
+        bracket.id = 'bracket'+this.elementList.length;
 
         this.domElement.appendChild(bracket);
+
+        this.elementList.push(bracket);
 
     }
 
@@ -48,7 +53,7 @@ class BookmarkBar {
         const folderButton = document.createElement('button');
         folderButton.className = 'folder';
         folderButton.textContent = folder.name;
-        folderButton.id = 'folder' + this.bookmarks.length;
+        folderButton.id = 'folder' + this.elementList.length;
         folderButton.draggable = true;
 
         folderButton.addEventListener('click', (event => {
@@ -72,7 +77,7 @@ class BookmarkBar {
 
         console.log('add visual folder 2')
         this.domElement.appendChild(folderButton);
-
+        this.elementList.push(folderButton);
     }
 
     addVisualBookmark(bookmark) {
@@ -135,6 +140,8 @@ class BookmarkBar {
             name: bookmark.name,
             url: bookmark.url,
         });
+
+        this.elementList.push(bookmarkButton);
     }
 
     // Function to handle drop event for folders
@@ -144,16 +151,20 @@ class BookmarkBar {
         const draggedElement = document.getElementById(data);
         this.domElement.classList.remove('drag-over');
 
-        if (draggedElement && draggedElement.parentElement !== this.domElement) {
-            // Add logic to handle folder drop (e.g., add bookmarks from the dragged folder)
-            const folderId = data.replace('folder', ''); // Extract folder ID from dragged element ID
-            const draggedFolder = this.bookmarks.find(folder => folder.id === folderId);
+        if (draggedElement && draggedElement.parentElement == this.domElement) {
+            if (event.target !== this.domElement) {
+                const indexOfDragged = this.elementList.indexOf(draggedElement);
+                
+                let element = this.elementList.splice(indexOfDragged, 1);
 
-            if (draggedFolder) {
-                draggedFolder.bookmarks.forEach(bookmark => {
-                    this.addVisualBookmark(bookmark);
-                });
-            }
+                
+                const indexOfHovered = this.elementList.indexOf(event.target);
+
+                this.elementList.splice(indexOfHovered, 0, element[0]);
+
+                this.refreshBoookmarBar();
+            }   
+
         }
     }
 
@@ -269,5 +280,16 @@ class BookmarkBar {
             }
         });
         this.bookmarkOrder = newBookmarkOrder;
+    }
+
+    refreshBoookmarBar() {
+        while (this.domElement.childElementCount != 0) {
+            this.domElement.removeChild(this.domElement.childNodes[0]);
+        }
+
+        this.elementList.forEach(ele => {
+            console.log(ele);
+            this.domElement.appendChild(ele);
+        });
     }
 }
