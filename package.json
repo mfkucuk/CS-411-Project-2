@@ -1,0 +1,22 @@
+{
+  "name": "cs-411-project-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfkucuk/CS-411-Project-2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mfkucuk/CS-411-Project-2/issues"
+  },
+  "homepage": "https://github.com/mfkucuk/CS-411-Project-2#readme",
+  "devDependencies": {
+    "electron": "^28.0.0"
+  }
+}

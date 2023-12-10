@@ -90,6 +90,11 @@ class BookmarkBar {
         // Make the bookmark button draggable
         bookmarkButton.draggable = true;
 
+        bookmarkButton.addEventListener('click', () => {
+            // Handle button click event, if needed
+            Browser.get().open(bookmark.url);
+        });
+
         bookmarkButton.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData("text", event.target.id);
         });
