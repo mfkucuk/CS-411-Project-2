@@ -247,16 +247,60 @@ export class BookmarkBar {
     }
 }
 
+let chosenElement = null;
+
 function showCustomContextMenu(event) {
     event.preventDefault();
 
     // Show the custom context menu at the cursor position
-    const customContextMenu = document.getElementById('customContextMenu');
+
+    if (event.target.className != 'bookmark' && event.target.className != 'folder'
+     && event.target.className != 'bookmark-bracket') 
+     {
+        return;
+    }
+    
+    const option2 = document.getElementById('renameOption');
+    const option3 = document.getElementById('iconOption');
+    if (event.target.className == 'bookmark-bracket') 
+    {
+        option2.style.display = 'none';
+        option3.style.display = 'none';
+    }
+    else 
+    {
+        option2.style.display = 'block';
+        option3.style.display = 'block';
+    }
+
+    chosenElement = event.target;
+
+    const customContextMenu = document.getElementById('menu');
     customContextMenu.style.left = event.clientX + 'px';
     customContextMenu.style.top = event.clientY + 'px';
     customContextMenu.style.display = 'block';
 
     // Set a data attribute to identify the target element
-    customContextMenu.setAttribute('data-target-element', event.target.id);
-
+    //customContextMenu.setAttribute('data-target-element', event.target.id);
 }
+
+function hideCustomContextMenu() 
+{
+    const customContextMenu = document.getElementById('menu');
+    customContextMenu.style.display = 'none';
+}
+
+document.getElementById('deleteOption').addEventListener() 
+{
+    
+}
+
+window.addEventListener('contextmenu', (event) => 
+{
+    showCustomContextMenu(event);
+});
+
+window.addEventListener('click', (event) => 
+{
+    hideCustomContextMenu();
+});

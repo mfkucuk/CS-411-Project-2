@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>INSERT BROWSER NAME HERE</title>
 
         <script type="module" src="src/Page.js"></script>
         <script type="module" src="src/BookmarkExplorerElement.js"></script>
@@ -11,6 +11,7 @@
         <script type="module" src="src/Folder.js"></script>
         <script type="module" src="src/Bookmark.js"></script>
         <script type="module" src="src/main.js"></script>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">    
         <style>
@@ -189,9 +190,16 @@
                 border: 2px dashed #aaa;
             }
 
-            .menu {
-                position: relative;
-                display: inline-block;
+            #menu {
+                display: none;
+                position: fixed;
+                top: 10%;
+                left: 80%;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                z-index: 1;
               }
           
               .menu-content {
@@ -204,10 +212,7 @@
                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                 z-index: 1;
               }
-          
-              .menu:hover .menu-content {
-                display: block;
-              }
+        
           
               .menu-item {
                 padding: 12px 16px;
@@ -237,6 +242,7 @@
             </div>
         </div>
         
+        
         <div id="popupContainer">
             <span id="closePopupBtn">X</span>
             <input type="text" id="bookmarkTitle" placeholder="Bookmark Title", value="">
@@ -247,16 +253,13 @@
             <span id="closeFolderPopupBtn">X</span>
             
         </div>
-
+        <div id="menu">
+            <a id="deleteOption" class="menu-item">Delete</a>
+            <a id="renameOption" class="menu-item">Rename</a>
+            <a id="iconOption" class="menu-item">Change Icon</a>
+        </div>
+        
         <div id="pageContainer">
         </div>
-
-        <div class="menu">
-            <div class="menu-content">
-              <a href="#" class="menu-item">Option 1</a>
-              <a href="#" class="menu-item">Option 2</a>
-              <a href="#" class="menu-item">Option 3</a>
-            </div>
-          </div>
     </body>
 </html>

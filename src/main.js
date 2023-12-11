@@ -44,7 +44,7 @@ window.onload = () => {
     closeFolderPopupBtn.onclick = folderPopup;
     returnBtn.onclick = goBack;
 
-    
+
 }
 
 export function togglePopup() {
