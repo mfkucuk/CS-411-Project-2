@@ -25,8 +25,6 @@ export class BookmarkBar {
             const draggedElement = document.getElementById(data);
             this.domElement.classList.remove('drag-over');
 
-            console.log('asdasdasdasdasd');
-
             if (draggedElement == event.target) {
                 return;
             }
@@ -188,13 +186,13 @@ export class BookmarkBar {
         if (draggedElement && draggedElement.parentElement == this.domElement) {
             if (event.target !== this.domElement) {
                 const indexOfDragged = currentFolder.domElements.indexOf(draggedElement);
+                const indexOfHovered = currentFolder.domElements.indexOf(event.target);
                 
                 if (event.target.className == 'folder' && draggedElement.className != 'bookmark-bracket') 
                 {
                     let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
                     let element = currentFolder.elements.splice(indexOfDragged, 1);
     
-                    const indexOfHovered = currentFolder.domElements.indexOf(event.target);
 
                     currentFolder.elements[indexOfHovered].addElement(element[0]);
                     this.refreshBoookmarBar();
@@ -202,7 +200,7 @@ export class BookmarkBar {
                 else 
                 {
                     let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
-                    let element = currentFolder.elements.splice(indexOfDragged, 1);a
+                    let element = currentFolder.elements.splice(indexOfDragged, 1);
     
                     currentFolder.domElements.splice(indexOfHovered, 0, domElement[0]);
                     currentFolder.elements.splice(indexOfHovered, 0, element[0]);
