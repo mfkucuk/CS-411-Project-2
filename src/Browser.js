@@ -1,4 +1,7 @@
-class Browser {
+import { BookmarkBar } from './BookmarkBar.js';
+import { BookmarkOrganizerWindow } from './BookmarkOrganizerWindow.js';
+
+export class Browser {
     constructor() {
         this.bookmarks = [];
         this.bookmarkBar = new BookmarkBar();

@@ -1,8 +1,12 @@
-class BookmarkOrganizerWindow {
+import { Folder } from "./Folder.js";
+
+export class BookmarkOrganizerWindow {
     constructor() {
         this.folders = [];
 
         this.rootFolder = this.createFolder("Root");
+
+        this.currentFolder = this.rootFolder;
     }
 
     createFolder(name) {

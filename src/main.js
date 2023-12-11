@@ -1,3 +1,8 @@
+import { Page } from './Page.js';
+import { Browser } from './Browser.js';
+import { Bracket } from './Bracket.js';
+import { Bookmark } from './Bookmark.js';
+ 
 window.onload = () => {
 
     Browser.get().open(page3);
@@ -7,39 +12,58 @@ window.onload = () => {
     const bookmarkTitle = document.getElementById('bookmarkTitle');
     const folderBtn = document.getElementById('folderBtn');
     const bracketBtn = document.getElementById('bracketBtn');
+    const toggleBtn = document.getElementById('toggleBtn');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+    const closeFolderPopupBtn = document.getElementById('closeFolderPopupBtn');
+    const returnBtn = document.getElementById('returnBtn');
 
     addButton.addEventListener('click', (event) => {
-        Browser.get().getOrganizerWindow().rootFolder.addElement(
+        Browser.get().getOrganizerWindow().currentFolder.addElement(
             new Bookmark(Browser.get().currentPage.url, bookmarkTitle.value, "icon")
             );
         bookmarkTitle.value = ""    
     });
 
     folderBtn.addEventListener('click', (event) => {
-        Browser.get().getOrganizerWindow().rootFolder.addElement(
+        Browser.get().getOrganizerWindow().currentFolder.addElement(
             Browser.get().getOrganizerWindow().createFolder('New Folder')
         );
-        console.log('folder added');
     });
 
     bracketBtn.addEventListener('click', (event) => {
-        Browser.get().getOrganizerWindow().rootFolder.addElement(
-            new BookmarkExplorerElement('bracket')
+        Browser.get().getOrganizerWindow().currentFolder.addElement(
+            new Bracket('bracket')
         );
     });
 
 
-
+    toggleBtn.onclick = togglePopup;
+    closePopupBtn.onclick = togglePopup;
+    closeFolderPopupBtn.onclick = folderPopup;
+    returnBtn.onclick = goBack;
 }
 
-function togglePopup() {
+export function togglePopup() {
     const popupContainer = document.getElementById('popupContainer');
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
-function folderPopup() {
+export function folderPopup() {
     const popupContainer = document.getElementById('folderContainer');
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
+}
+
+function goBack() 
+{
+    let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+
+    if (currentFolder.folder == null) {
+        return;
+    }
+
+    Browser.get().getOrganizerWindow().currentFolder = currentFolder.folder;
+
+    Browser.get().getBookmarkBar().refreshBoookmarBar();
 }
 
 

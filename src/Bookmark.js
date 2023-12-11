@@ -1,4 +1,6 @@
-class Bookmark extends BookmarkExplorerElement {
+import { BookmarkExplorerElement } from './BookmarkExplorerElement.js';
+
+export class Bookmark extends BookmarkExplorerElement {
     constructor(url, name, icon) {
 
         super(name);

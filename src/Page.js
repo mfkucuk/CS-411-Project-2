@@ -1,4 +1,4 @@
-class Page {
+export class Page {
     constructor(url, content) {
         this.url = url;
         content.id = 'page';

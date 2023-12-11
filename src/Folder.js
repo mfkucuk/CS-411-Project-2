@@ -1,14 +1,17 @@
-class Folder extends BookmarkExplorerElement {
+import { BookmarkExplorerElement } from './BookmarkExplorerElement.js';
+import { Browser } from './Browser.js';
+import { Bookmark } from './Bookmark.js';
+
+export class Folder extends BookmarkExplorerElement {
     constructor(name, folder) {
         
         super(name, folder);
 
         this.elements = [];
+        this.domElements = [];
     }
 
     addElement(element) {
-        this.elements.push(element);
-        element.folder = this;
         if (element instanceof Folder){
             Browser.get().getBookmarkBar().addVisualFolder(element);
         } else if (element instanceof Bookmark)
@@ -16,8 +19,12 @@ class Folder extends BookmarkExplorerElement {
             Browser.get().getBookmarkBar().addVisualBookmark(element);
         } 
         else{
-            Browser.get().getBookmarkBar().addBracket();
+            Browser.get().getBookmarkBar().addBracket(element);
         }
+        
+        this.elements.push(element);
+        this.domElements.push(element.domElement);
+        element.folder = this;
     }
 
     removeElement(element) {

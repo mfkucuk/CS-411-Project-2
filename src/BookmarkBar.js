@@ -1,4 +1,6 @@
-class BookmarkBar {
+import { Browser } from "./Browser.js";
+
+export class BookmarkBar {
     constructor() {
         this.visible = true;
         this.bookmarks = [];
@@ -15,8 +17,6 @@ class BookmarkBar {
         this.domElement.addEventListener('dragenter', this.handleDragEnter.bind(this));
         this.domElement.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.domElement.addEventListener('drop', this.handleDrop.bind(this));
-        this.domElement.addEventListener('drop', this.handleDrop.bind(this));
-        this.domElement.addEventListener('drop', this.handleFolderDrop.bind(this)); // Add new event listener
     }
 
     show() {
@@ -28,20 +28,21 @@ class BookmarkBar {
     }
 
 
-    addBracket(){
+    addBracket(bracket){
         if (!this.visible) {
             return;
         }
      
-        const bracket = document.createElement('div');
-        bracket.className = 'bookmark-bracket'; 
-        bracket.draggable = true;
-        bracket.textContent = '|'; 
-        bracket.id = 'bracket'+this.elementList.length;
+        const bracketDom = document.createElement('div');
+        bracketDom.className = 'bookmark-bracket'; 
+        bracketDom.draggable = true;
+        bracketDom.textContent = '|'; 
+        bracketDom.id = 'bracket'+this.elementList.length;
+        bracket.domElement = bracketDom;
 
-        this.domElement.appendChild(bracket);
+        this.domElement.appendChild(bracketDom);
 
-        this.elementList.push(bracket);
+        this.elementList.push(bracketDom);
 
     }
 
@@ -49,25 +50,20 @@ class BookmarkBar {
         if (!this.visible) {
             return;
         }
+
+        //Browser.get().getOrganizerWindow().currentFolder.addElement();
+
         console.log('add visual folder 1')
         const folderButton = document.createElement('button');
         folderButton.className = 'folder';
         folderButton.textContent = folder.name;
         folderButton.id = 'folder' + this.elementList.length;
         folderButton.draggable = true;
+        folder.domElement = folderButton;
 
         folderButton.addEventListener('click', (event => {
-            const popupContainer = document.getElementById('folderContainer');
-            popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
-            this.bookmarks.forEach((label, index) => {
-                const button = document.createElement('button');
-                const bookmarkId = `bookmark-${Math.random()}`;
-                bookmarkButton.id = bookmarkId;
-                bookmarkButton.className = 'bookmark';
-                bookmarkButton.textContent = bookmark.name;
-                bookmarkButton.href = bookmark.url;
-                popup.appendChild(button);
-              });
+            Browser.get().getOrganizerWindow().currentFolder = folder;
+            this.refreshBoookmarBar();
         }))
 
         folderButton.addEventListener('dragstart', (event) => {
@@ -91,6 +87,7 @@ class BookmarkBar {
         bookmarkButton.className = 'bookmark';
         bookmarkButton.textContent = bookmark.name;
         bookmarkButton.href = bookmark.url;
+        bookmark.domElement = bookmarkButton;
 
         // Make the bookmark button draggable
         bookmarkButton.draggable = true;
@@ -145,24 +142,56 @@ class BookmarkBar {
     }
 
     // Function to handle drop event for folders
-    handleFolderDrop(event) {
+    handleDrop(event) {
         event.preventDefault();
         const data = event.dataTransfer.getData("text");
         const draggedElement = document.getElementById(data);
         this.domElement.classList.remove('drag-over');
 
+        if (draggedElement == event.target) {
+            return;
+        }
+
+        let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+
         if (draggedElement && draggedElement.parentElement == this.domElement) {
             if (event.target !== this.domElement) {
-                const indexOfDragged = this.elementList.indexOf(draggedElement);
+                const indexOfDragged = currentFolder.domElements.indexOf(draggedElement);
                 
-                let element = this.elementList.splice(indexOfDragged, 1);
+                if (event.target.className == 'folder' && draggedElement.className != 'bookmark-bracket') 
+                {
+                    let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
+                    let element = currentFolder.elements.splice(indexOfDragged, 1);
+    
+                    const indexOfHovered = currentFolder.domElements.indexOf(event.target);
 
-                
-                const indexOfHovered = this.elementList.indexOf(event.target);
+                    currentFolder.elements[indexOfHovered].addElement(element[0]);
+                    this.refreshBoookmarBar();
+                }
+                else if (event.target.id == 'returnBtn' && draggedElement.className != 'bookmark-bracket') 
+                {
+                    let element = currentFolder.elements[indexOfDragged];
 
-                this.elementList.splice(indexOfHovered, 0, element[0]);
+                    const parentFolder = Browser.get().getOrganizerWindow().currentFolder.folder;
 
-                this.refreshBoookmarBar();
+                    if (parentFolder == null) 
+                    {
+                        return;
+                    }
+
+                    parentFolder.addElement(element);
+                }
+                else 
+                {
+                    let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
+                    let element = currentFolder.elements.splice(indexOfDragged, 1);a
+    
+                    currentFolder.domElements.splice(indexOfHovered, 0, domElement[0]);
+                    currentFolder.elements.splice(indexOfHovered, 0, element[0]);
+    
+                    this.refreshBoookmarBar();
+                }
+
             }   
 
         }
@@ -180,17 +209,6 @@ class BookmarkBar {
         this.domElement.classList.remove('drag-over');
     }
 
-    handleDrop(event) {
-        event.preventDefault();
-        const data = event.dataTransfer.getData("text");
-        const draggedElement = document.getElementById(data);
-        this.domElement.classList.remove('drag-over');
-
-        if (draggedElement && draggedElement.parentElement !== this.domElement) {
-            this.readdBookmarks();
-        }
-    }
-
     handleDragStart(event) {
         event.dataTransfer.setData("text/plain", event.target.id);
     }
@@ -200,96 +218,29 @@ class BookmarkBar {
         this.domElement.classList.add('drag-over');
     }
 
-    updateBookmarkOrder(draggedId, newIndex) {
-        // Remove the dragged bookmark from the order
-        const currentIndex = this.bookmarkOrder.indexOf(draggedId);
-        this.bookmarkOrder.splice(currentIndex, 1);
-
-        // Insert the dragged bookmark at the new index
-        this.bookmarkOrder.splice(newIndex, 0, draggedId);
-
-        // Implement logic to save the new order to your data storage
-        console.log("Bookmark order updated:", this.bookmarkOrder);
-
-        // Re-add bookmarks to the BookmarkBar in the updated order
-        this.readdBookmarks();
-    }
-
-    readdBookmark(bookmark) {
-        const bookmarkButton = document.createElement('button');
-        const bookmarkId = `bookmark-${Math.random()}`;
-        bookmarkButton.id = bookmarkId;
-        bookmarkButton.className = 'bookmark';
-        bookmarkButton.textContent = bookmark.name;
-        bookmarkButton.href = bookmark.url;
-
-        // Make the bookmark button draggable
-        bookmarkButton.draggable = true;
-
-        bookmarkButton.addEventListener('dragstart', (event) => {
-            event.dataTransfer.setData("text", event.target.id);
-            console.log('dragstart', event.target.id);
-        });
-
-        bookmarkButton.addEventListener('dragover', (event) => {
-            event.preventDefault();
-            console.log('dragover');
-        });
-
-        bookmarkButton.addEventListener('dragenter', (event) => {
-            event.preventDefault();
-            console.log('dragenter');
-            this.domElement.classList.add('drag-over');
-        });
-
-        bookmarkButton.addEventListener('dragleave', () => {
-            console.log('dragleave');
-            this.domElement.classList.remove('drag-over');
-        });
-
-        bookmarkButton.addEventListener('drop', (event) => {
-            event.preventDefault();
-            const data = event.dataTransfer.getData("text");
-            console.log('drop', data);
-            this.domElement.classList.remove('drag-over');
-            this.updateBookmarkOrder();
-        });
-
-        // Append the bookmark button to the DOM
-        this.domElement.appendChild(bookmarkButton);
-
-        // Add the bookmark ID to the bookmarkOrder array
-        this.bookmarkOrder.push(bookmarkId);
-
-        // Add the bookmark to the bookmarks array
-        this.bookmarks.push({
-            id: bookmarkId,
-            name: bookmark.name,
-            url: bookmark.url,
-        });
-    }
-
-    readdBookmarks() {
-        this.domElement.innerHTML = ''; // Clear the BookmarkBar
-        const newBookmarkOrder = [];
-        this.bookmarkOrder.forEach(bookmarkId => {
-            const bookmark = this.bookmarks.find(b => b.id === bookmarkId);
-            if (bookmark) {
-                this.readdBookmark(bookmark);
-                newBookmarkOrder.push(bookmarkId);
-            }
-        });
-        this.bookmarkOrder = newBookmarkOrder;
-    }
-
     refreshBoookmarBar() {
         while (this.domElement.childElementCount != 0) {
             this.domElement.removeChild(this.domElement.childNodes[0]);
         }
 
-        this.elementList.forEach(ele => {
-            console.log(ele);
+        let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+
+        currentFolder.domElements.forEach(ele => {
             this.domElement.appendChild(ele);
         });
     }
+}
+
+function showCustomContextMenu(event) {
+    event.preventDefault();
+
+    // Show the custom context menu at the cursor position
+    const customContextMenu = document.getElementById('customContextMenu');
+    customContextMenu.style.left = event.clientX + 'px';
+    customContextMenu.style.top = event.clientY + 'px';
+    customContextMenu.style.display = 'block';
+
+    // Set a data attribute to identify the target element
+    customContextMenu.setAttribute('data-target-element', event.target.id);
+
 }
