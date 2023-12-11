@@ -17,6 +17,37 @@ export class BookmarkBar {
         this.domElement.addEventListener('dragenter', this.handleDragEnter.bind(this));
         this.domElement.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.domElement.addEventListener('drop', this.handleDrop.bind(this));
+
+        document.getElementById('returnBtn').addEventListener('drop', (event) => 
+        {
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            const draggedElement = document.getElementById(data);
+            this.domElement.classList.remove('drag-over');
+
+            console.log('asdasdasdasdasd');
+
+            if (draggedElement == event.target) {
+                return;
+            }
+
+            else if (event.target.id == 'returnBtn' && draggedElement.className != 'bookmark-bracket') 
+            {
+                const currentFolder = Browser.get().getOrganizerWindow().currentFolder
+                const parentFolder = currentFolder.folder;
+                
+                if (parentFolder == null) 
+                {
+                    return;
+                }
+
+                const indexOfDragged = currentFolder.domElements.indexOf(draggedElement);
+                let element = currentFolder.elements.splice(indexOfDragged, 1);
+                currentFolder.domElements.splice(indexOfDragged, 1);
+
+                parentFolder.addElement(element[0]);
+            }
+        });
     }
 
     show() {
@@ -167,19 +198,6 @@ export class BookmarkBar {
 
                     currentFolder.elements[indexOfHovered].addElement(element[0]);
                     this.refreshBoookmarBar();
-                }
-                else if (event.target.id == 'returnBtn' && draggedElement.className != 'bookmark-bracket') 
-                {
-                    let element = currentFolder.elements[indexOfDragged];
-
-                    const parentFolder = Browser.get().getOrganizerWindow().currentFolder.folder;
-
-                    if (parentFolder == null) 
-                    {
-                        return;
-                    }
-
-                    parentFolder.addElement(element);
                 }
                 else 
                 {
