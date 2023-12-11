@@ -5,6 +5,7 @@ export class BookmarkBar {
         this.visible = true;
         this.bookmarks = [];
         this.domElement = document.getElementById('bookmarkBar');
+        this.outerBar = document.getElementById('innerBookmarkCont');
 
         this.elementList = [];
 
@@ -17,6 +18,13 @@ export class BookmarkBar {
         this.domElement.addEventListener('dragenter', this.handleDragEnter.bind(this));
         this.domElement.addEventListener('dragleave', this.handleDragLeave.bind(this));
         this.domElement.addEventListener('drop', this.handleDrop.bind(this));
+
+        this.outerBar.addEventListener('dragstart', this.handleDragStart.bind(this));
+        this.outerBar.addEventListener('dragover', this.handleDragOver.bind(this));
+        this.outerBar.addEventListener('dragenter', this.handleDragEnter.bind(this));
+        this.outerBar.addEventListener('dragleave', this.handleDragLeave.bind(this));
+        this.outerBar.addEventListener('drop', this.handleDrop.bind(this));
+
 
         document.getElementById('returnBtn').addEventListener('drop', (event) => 
         {
@@ -210,7 +218,7 @@ export class BookmarkBar {
 
             }   
 
-        }
+        } 
     }
 
     handleDragOver(event) {
@@ -247,16 +255,3 @@ export class BookmarkBar {
     }
 }
 
-function showCustomContextMenu(event) {
-    event.preventDefault();
-
-    // Show the custom context menu at the cursor position
-    const customContextMenu = document.getElementById('customContextMenu');
-    customContextMenu.style.left = event.clientX + 'px';
-    customContextMenu.style.top = event.clientY + 'px';
-    customContextMenu.style.display = 'block';
-
-    // Set a data attribute to identify the target element
-    customContextMenu.setAttribute('data-target-element', event.target.id);
-
-}
