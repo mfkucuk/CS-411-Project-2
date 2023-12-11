@@ -21,7 +21,7 @@ export class Folder extends BookmarkExplorerElement {
         else{
             Browser.get().getBookmarkBar().addBracket(element);
         }
-        
+
         this.elements.push(element);
         this.domElements.push(element.domElement);
         element.folder = this;
@@ -35,9 +35,5 @@ export class Folder extends BookmarkExplorerElement {
         }
 
         this.elements.splice(index, 1);
-    }
-
-    organizeElements() {
-        
     }
 }

@@ -2,6 +2,8 @@ import { Page } from './Page.js';
 import { Browser } from './Browser.js';
 import { Bracket } from './Bracket.js';
 import { Bookmark } from './Bookmark.js';
+
+const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '📸', '🎥', '🎙', '⚙️', '🥪', '🍎', '🌍', '🐶', '🧳', '💄', '💍', '👔'];
  
 window.onload = () => {
 
@@ -41,6 +43,8 @@ window.onload = () => {
     closePopupBtn.onclick = togglePopup;
     closeFolderPopupBtn.onclick = folderPopup;
     returnBtn.onclick = goBack;
+
+    
 }
 
 export function togglePopup() {

@@ -14,12 +14,4 @@ export class BookmarkOrganizerWindow {
         this.folders.push(folder);
         return folder;
     }
-
-    dragAndDrop() {
-
-    }
-
-    addVisualBrackets() {
-
-    }
 }

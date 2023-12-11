@@ -9,8 +9,6 @@ export class Browser {
 
         this.currentPage = null;
         this.allPages = {};
-
-
     }
 
     static get() {
