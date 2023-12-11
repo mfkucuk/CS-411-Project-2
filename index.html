@@ -11,7 +11,8 @@
         <script type="module" src="src/Folder.js"></script>
         <script type="module" src="src/Bookmark.js"></script>
         <script type="module" src="src/main.js"></script>
-
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -187,6 +188,37 @@
             .drag-over {
                 border: 2px dashed #aaa;
             }
+
+            .menu {
+                position: relative;
+                display: inline-block;
+              }
+          
+              .menu-content {
+                display: none;
+                position: absolute;
+                top: 0;
+                right: 0;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+              }
+          
+              .menu:hover .menu-content {
+                display: block;
+              }
+          
+              .menu-item {
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                color: #333;
+              }
+          
+              .menu-item:hover {
+                background-color: #ddd;
+              }
         </style>
     </head>
 
@@ -219,6 +251,12 @@
         <div id="pageContainer">
         </div>
 
-
+        <div class="menu">
+            <div class="menu-content">
+              <a href="#" class="menu-item">Option 1</a>
+              <a href="#" class="menu-item">Option 2</a>
+              <a href="#" class="menu-item">Option 3</a>
+            </div>
+          </div>
     </body>
 </html>
