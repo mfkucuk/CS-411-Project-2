@@ -8,12 +8,4 @@ export class Bookmark extends BookmarkExplorerElement {
         this.url = url;
         this.icon = icon;
     }
-
-    open() {
-
-    }
-
-    customize() {
-        
-    }
 }
