@@ -7,7 +7,7 @@ const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '�
  
 window.onload = () => {
 
-    Browser.get().open(page3);
+    Browser.get().open(pages[pageIndex]);
 
     const addButton = document.getElementById('addBookmarkBtn');
     const searchBar = document.getElementById('searchInput');
@@ -70,11 +70,57 @@ function goBack()
     Browser.get().getBookmarkBar().refreshBoookmarBar();
 }
 
+let pages = [];
+let pageIndex = 0;
 
-let mainPageContent = document.createElement('div');
-mainPageContent.style.backgroundColor = "#FF0000";
+// Mock-up web pages
 
-let mainPage = new Page('mainpage', mainPageContent);
+/////////////////// MAIN PAGE ///////////////////
+{
+    let mainPageContent = document.createElement('div');
+    mainPageContent.style.backgroundColor = "#EEEEEE";
+    
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Flare';
+
+    let p1 = document.createElement('p');
+    p1.innerText = 'Welcome To Flare Browser';
+
+    mainPageContent.appendChild(h1);
+    mainPageContent.appendChild(p1);
+
+    pages.push(new Page('mainpage.com', mainPageContent));
+}
+/////////////////////////////////////////////////
+
+//////////////////// ZWITTER ////////////////////
+{
+    let zwitterContent = document.createElement('div');
+    zwitterContent.style.backgroundColor = '#00AAFF';
+
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Welcome to Zwitter';
+
+    zwitterContent.appendChild(h1);
+
+    pages.push(new Page('zwitter.com', zwitterContent));
+}
+/////////////////////////////////////////////////
+
+///////////////////// AWAZON ////////////////////
+{
+    let awazonContent = document.createElement('div');
+    awazonContent.style.backgroundColor = '#FFFF00';
+
+    let h1 = document.createElement('h1');
+    h1.innerText = 'Welcome to Awazon';
+
+    awazonContent.appendChild(h1);
+
+    pages.push(new Page('awazon.com', awazonContent));
+}
+/////////////////////////////////////////////////
+
 
 let page1Content = document.createElement('div');
 page1Content.style.backgroundColor = "#00FF00";
@@ -92,7 +138,14 @@ page3Content.style.backgroundColor = "#FFFF00";
 let page3 = new Page('page3', page3Content);
 
 window.addEventListener('keydown', (event) => {
-    if (event.key == 'Enter') {
-        Browser.get().open(mainPage);
+    if (event.key == 'ArrowRight') {
+        pageIndex++;
+        pageIndex = Math.min(pageIndex, pages.length - 1);
+        Browser.get().open(pages[pageIndex]);
+    }
+    else if (event.key == 'ArrowLeft') {
+        pageIndex--;
+        pageIndex = Math.max(pageIndex, 0);
+        Browser.get().open(pages[pageIndex]);
     }
 });

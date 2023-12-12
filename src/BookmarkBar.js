@@ -199,12 +199,14 @@ export class BookmarkBar {
                 const indexOfDragged = currentFolder.domElements.indexOf(draggedElement);
                 const indexOfHovered = currentFolder.domElements.indexOf(event.target);
                 
+                let offset = indexOfDragged < indexOfHovered ? -1 : 0;
                 if (event.target.className == 'folder' && draggedElement.className != 'bookmark-bracket') 
                 {
                     let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
                     let element = currentFolder.elements.splice(indexOfDragged, 1);
 
-                    currentFolder.elements[indexOfHovered].addElement(element[0]);
+
+                    currentFolder.elements[indexOfHovered + offset].addElement(element[0]);
                     this.refreshBoookmarBar();
                 }
                 else 
@@ -212,8 +214,8 @@ export class BookmarkBar {
                     let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
                     let element = currentFolder.elements.splice(indexOfDragged, 1);
     
-                    currentFolder.domElements.splice(indexOfHovered, 0, domElement[0]);
-                    currentFolder.elements.splice(indexOfHovered, 0, element[0]);
+                    currentFolder.domElements.splice(indexOfHovered + offset, 0, domElement[0]);
+                    currentFolder.elements.splice(indexOfHovered + offset, 0, element[0]);
     
                     this.refreshBoookmarBar();
                 }
