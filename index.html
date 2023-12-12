@@ -80,11 +80,38 @@
                 
             }
 
+
             #popupContainer {
                 display: none;
                 position: fixed;
                 top: 10%;
-                left: 80%;
+                left: 60%;
+                transform: translate(-10%, -40%);
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            #renameContainer {
+                display: none;
+                position: fixed;
+                top: 10%;
+                left: 60%;
+                transform: translate(-10%, -40%);
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                z-index: 1;
+            }
+
+            #iconContainer {
+                display: none;
+                position: fixed;
+                top: 20%;
+                left: 60%;
                 transform: translate(-10%, -40%);
                 background-color: #fff;
                 padding: 20px;
@@ -112,6 +139,21 @@
                 right: 10px;
                 cursor: pointer;
             }
+
+            #closeRenamePopupBtn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+            }
+
+            #closeIconPopupBtn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                cursor: pointer;
+            }
+
 
             #bookmarkBarContainer {
                 display: flex;
@@ -202,28 +244,42 @@
                 z-index: 1;
               }
           
-              .menu-content {
-                display: none;
-                position: absolute;
-                top: 0;
-                right: 0;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-              }
+            .menu-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            }
+    
         
-          
-              .menu-item {
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                color: #333;
-              }
-          
-              .menu-item:hover {
-                background-color: #ddd;
-              }
+            .menu-item {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: #333;
+            }
+        
+            .menu-item:hover {
+            background-color: #ddd;
+            }
+
+            .emoBtn{
+                padding: 4px;
+                margin: 1px;
+                cursor: pointer;
+                background-color:#fff;
+                border: #fff;
+                border-radius: 3px;
+            }
+
+            .emoBtn:hover{
+                background-color:#ddd;
+            }
+
         </style>
     </head>
 
@@ -249,16 +305,50 @@
             <button id="addBookmarkBtn">Add Bookmark</button>
         </div>
 
-        <div id="folderContainer">
-            <span id="closeFolderPopupBtn">X</span>
-            
-        </div>
         <div id="menu">
             <a id="deleteOption" class="menu-item">Delete</a>
             <a id="renameOption" class="menu-item">Rename</a>
             <a id="iconOption" class="menu-item">Change Icon</a>
         </div>
         
+        <div id="renameContainer">
+            <span id="closeRenamePopupBtn">X</span>
+            <input type="text" id="renamedTitle" placeholder="New Title", value="">
+            <button id="renameBtn">Rename</button>
+        </div>
+
+        <div id="iconContainer">
+            <span id="closeIconPopupBtn">X</span>
+            <div>
+                <button id="emoji0" class="emoBtn">⌚️</button> 
+                <button id="emoji1" class="emoBtn">💡</button> 
+                <button id="emoji2" class="emoBtn">❤️</button> 
+                <button id="emoji3" class="emoBtn">🔔</button> 
+                <button id="emoji4" class="emoBtn">✔️</button> 
+            </div>
+            <div>
+                <button id="emoji5" class="emoBtn">🎵</button> 
+                <button id="emoji6" class="emoBtn">💻</button> 
+                <button id="emoji7" class="emoBtn">📸</button> 
+                <button id="emoji8" class="emoBtn">🎥</button> 
+                <button id="emoji9" class="emoBtn">🚀</button> 
+            </div>
+            <div>
+                <button id="emoji10" class="emoBtn">⚙️</button> 
+                <button id="emoji11" class="emoBtn">🥪</button> 
+                <button id="emoji12" class="emoBtn">🍎</button> 
+                <button id="emoji13" class="emoBtn">🌍</button> 
+                <button id="emoji14" class="emoBtn">🐶</button> 
+            </div>
+            <div>
+                <button id="emoji15" class="emoBtn">🧳</button> 
+                <button id="emoji16" class="emoBtn">💄</button> 
+                <button id="emoji17" class="emoBtn">💍</button> 
+                <button id="emoji18" class="emoBtn">👔</button> 
+                <button id="emoji19" class="emoBtn">💾</button> 
+            </div>
+        </div>
+
         <div id="pageContainer">
         </div>
     </body>
