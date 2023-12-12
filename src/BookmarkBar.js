@@ -307,7 +307,6 @@ function hideCustomContextMenu()
 document.getElementById('deleteOption').addEventListener('click', () => {
 
     console.log(chosenElement);
-    window.alert(chosenElement);
 
     let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
@@ -330,38 +329,52 @@ document.getElementById('renameBtn').addEventListener('click', () => {
 
     currentFolder.domElement[index].name = document.getElementById('renamedTitle').value;
 
-    renamePopup();
+    document.getElementById('renamedTitle').value = "";
+
+    this.renamePopup();
 
     Browser.get().getBookmarkBar().refreshBoookmarBar();
     chosenElement = null;
-
+   
 })
 
 
 const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '📸', '🎥', '🚀', '⚙️', '🥪', '🍎', '🌍', '🐶', '🧳', '💄', '💍', '👔', '💾'];
 
 
-let emoButtons = document.getElementByClassName('emoBtn');
+let emoButtons = Array.from(document.getElementsByClassName('emoBtn'));
 
 emoButtons.forEach(btn => {
     btn.addEventListener('click', () => {
 
         console.log(chosenElement);
-        window.alert(chosenElement)    
         let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
     
         const index = currentFolder.domElements.indexOf(chosenElement);
     
-        let id = btn.id;
-        id.splice(0,5);
-        let i = parseInt(id);
- 
-        chosenElement.textContent = emojis[i] + chosenElement.textContent;
-        currentFolder.domElement[index].name =  chosenElement.textContent;
+        window.alert(typeof emojis[0])
 
+        let id = btn.id;
+        id = id.substring(5);
+        let i = parseInt(id);
+
+        const unicodeValue = chosenElement.textContent.charCodeAt(0);
+
+        window.alert(chosenElement.textContent[0]);
+        if(emojis.map(char => char.charCodeAt(0)).includes(unicodeValue)){
+            chosenElement.textContent = chosenElement.textContent.substring(2);
+            chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
+            currentFolder.domElement[index].name =  chosenElement.textContent;
+        } else {
+            chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
+            currentFolder.domElement[index].name =  chosenElement.textContent;
+        }
         
+        this.iconPopup();
+
         Browser.get().getBookmarkBar().refreshBoookmarBar();
         chosenElement = null;
+
     });
 });
 
