@@ -336,7 +336,8 @@ document.getElementById('renameBtn').addEventListener('click', () => {
     chosenElement = null;
 
 })
-/*
+
+
 const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '📸', '🎥', '🚀', '⚙️', '🥪', '🍎', '🌍', '🐶', '🧳', '💄', '💍', '👔', '💾'];
 
 
@@ -363,7 +364,7 @@ emoButtons.forEach(btn => {
         chosenElement = null;
     });
 });
-*/
+
 
 
 window.addEventListener('contextmenu', (event) => 
