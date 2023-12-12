@@ -63,11 +63,38 @@ body {
     
 }
 
+
 #popupContainer {
     display: none;
     position: fixed;
     top: 10%;
-    left: 80%;
+    left: 60%;
+    transform: translate(-10%, -40%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+#renameContainer {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 60%;
+    transform: translate(-10%, -40%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+#iconContainer {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 60%;
     transform: translate(-10%, -40%);
     background-color: #fff;
     padding: 20px;
@@ -95,6 +122,21 @@ body {
     right: 10px;
     cursor: pointer;
 }
+
+#closeRenamePopupBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#closeIconPopupBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
 
 #bookmarkBarContainer {
     display: flex;
@@ -186,24 +228,37 @@ body {
   }
 
 .menu-content {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+display: none;
+position: absolute;
+top: 0;
+right: 0;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
 }
 
 
 .menu-item {
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    color: #333;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+color: #333;
 }
 
 .menu-item:hover {
-    background-color: #ddd;
+background-color: #ddd;
+}
+
+.emoBtn{
+    padding: 4px;
+    margin: 1px;
+    cursor: pointer;
+    background-color:#fff;
+    border: #fff;
+    border-radius: 3px;
+}
+
+.emoBtn:hover{
+    background-color:#ddd;
 }
