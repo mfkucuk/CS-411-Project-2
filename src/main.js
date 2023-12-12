@@ -3,7 +3,6 @@ import { Browser } from './Browser.js';
 import { Bracket } from './Bracket.js';
 import { Bookmark } from './Bookmark.js';
 
-const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '📸', '🎥', '🎙', '⚙️', '🥪', '🍎', '🌍', '🐶', '🧳', '💄', '💍', '👔'];
  
 window.onload = () => {
 
@@ -16,8 +15,12 @@ window.onload = () => {
     const bracketBtn = document.getElementById('bracketBtn');
     const toggleBtn = document.getElementById('toggleBtn');
     const closePopupBtn = document.getElementById('closePopupBtn');
-    const closeFolderPopupBtn = document.getElementById('closeFolderPopupBtn');
+    const closeRenamePopupBtn = document.getElementById('closeRenamePopupBtn');
+    const closeIconPopupBtn = document.getElementById('closeIconPopupBtn');
     const returnBtn = document.getElementById('returnBtn');
+    const renameBtn = document.getElementById('renameOption');
+    const iconBtn = document.getElementById('iconOption');
+
 
     addButton.addEventListener('click', (event) => {
         Browser.get().getOrganizerWindow().currentFolder.addElement(
@@ -41,8 +44,11 @@ window.onload = () => {
 
     toggleBtn.onclick = togglePopup;
     closePopupBtn.onclick = togglePopup;
-    closeFolderPopupBtn.onclick = folderPopup;
+    closeRenamePopupBtn.onclick = renamePopup;
+    renameBtn.onclick = renamePopup;
     returnBtn.onclick = goBack;
+    iconBtn.onclick = iconPopup;
+    closeIconPopupBtn.onclick = iconPopup;
 
 
 }
@@ -52,8 +58,13 @@ export function togglePopup() {
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
-export function folderPopup() {
-    const popupContainer = document.getElementById('folderContainer');
+export function renamePopup() {
+    const popupContainer = document.getElementById('renameContainer');
+    popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
+}
+
+export function iconPopup() {
+    const popupContainer = document.getElementById('iconContainer');
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 

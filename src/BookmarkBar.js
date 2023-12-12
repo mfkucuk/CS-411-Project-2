@@ -1,4 +1,5 @@
 import { Browser } from "./Browser.js";
+import { renamePopup } from "./main.js";
 
 export class BookmarkBar {
     constructor() {
@@ -6,7 +7,6 @@ export class BookmarkBar {
         this.bookmarks = [];
         this.domElement = document.getElementById('bookmarkBar');
         this.outerBar = document.getElementById('innerBookmarkCont');
-
         this.elementList = [];
 
         // Variable to store the order of bookmarks
@@ -299,7 +299,6 @@ function showCustomContextMenu(event) {
 
 function hideCustomContextMenu() 
 {
-    chosenElement = null;
 
     const customContextMenu = document.getElementById('menu');
     customContextMenu.style.display = 'none';
@@ -308,6 +307,7 @@ function hideCustomContextMenu()
 document.getElementById('deleteOption').addEventListener('click', () => {
 
     console.log(chosenElement);
+    window.alert(chosenElement);
 
     let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
@@ -316,7 +316,54 @@ document.getElementById('deleteOption').addEventListener('click', () => {
     currentFolder.domElements.splice(index, 1);
 
     Browser.get().getBookmarkBar().refreshBoookmarBar();
+    chosenElement = null;
+
 }); 
+
+document.getElementById('renameBtn').addEventListener('click', () => {
+
+    let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+
+    const index = currentFolder.domElements.indexOf(chosenElement);   
+
+    chosenElement.textContent = document.getElementById('renamedTitle').value;
+
+    currentFolder.domElement[index].name = document.getElementById('renamedTitle').value;
+
+    renamePopup();
+
+    Browser.get().getBookmarkBar().refreshBoookmarBar();
+    chosenElement = null;
+
+})
+/*
+const emojis = ['⌚️', '💡', '❤️', '🔔', '✔️', '🎵', '💻', '📸', '🎥', '🚀', '⚙️', '🥪', '🍎', '🌍', '🐶', '🧳', '💄', '💍', '👔', '💾'];
+
+
+let emoButtons = document.getElementByClassName('emoBtn');
+
+emoButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+        console.log(chosenElement);
+        window.alert(chosenElement)    
+        let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+    
+        const index = currentFolder.domElements.indexOf(chosenElement);
+    
+        let id = btn.id;
+        id.splice(0,5);
+        let i = parseInt(id);
+ 
+        chosenElement.textContent = emojis[i] + chosenElement.textContent;
+        currentFolder.domElement[index].name =  chosenElement.textContent;
+
+        
+        Browser.get().getBookmarkBar().refreshBoookmarBar();
+        chosenElement = null;
+    });
+});
+*/
 
 
 window.addEventListener('contextmenu', (event) => 
