@@ -39,10 +39,9 @@ export class BookmarkBar {
 
             else if (event.target.id == 'returnBtn' && draggedElement.className != 'bookmark-bracket') 
             {
-                const currentFolder = Browser.get().getOrganizerWindow().currentFolder
-                const parentFolder = currentFolder.folder;
+                const currentFolder = Browser.get().getOrganizerWindow().currentFolder;
                 
-                if (parentFolder == null) 
+                if (currentFolder.folder == null) 
                 {
                     return;
                 }
@@ -51,7 +50,11 @@ export class BookmarkBar {
                 let element = currentFolder.elements.splice(indexOfDragged, 1);
                 currentFolder.domElements.splice(indexOfDragged, 1);
 
-                parentFolder.addElement(element[0]);
+                console.log(element);
+
+                Browser.get().getOrganizerWindow().currentFolder.folder.addElement(element[0]);
+
+                this.refreshBoookmarBar();
             }
         });
     }
@@ -200,7 +203,6 @@ export class BookmarkBar {
                 {
                     let domElement = currentFolder.domElements.splice(indexOfDragged, 1);
                     let element = currentFolder.elements.splice(indexOfDragged, 1);
-    
 
                     currentFolder.elements[indexOfHovered].addElement(element[0]);
                     this.refreshBoookmarBar();
@@ -250,6 +252,7 @@ export class BookmarkBar {
         let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
         currentFolder.domElements.forEach(ele => {
+            console.log(ele);
             this.domElement.appendChild(ele);
         });
     }
@@ -294,14 +297,25 @@ function showCustomContextMenu(event) {
 
 function hideCustomContextMenu() 
 {
+    chosenElement = null;
+
     const customContextMenu = document.getElementById('menu');
     customContextMenu.style.display = 'none';
 }
 
-document.getElementById('deleteOption').addEventListener() 
-{
-    
-}
+document.getElementById('deleteOption').addEventListener('click', () => {
+
+    console.log(chosenElement);
+
+    let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
+
+    const index = currentFolder.domElements.indexOf(chosenElement);
+
+    currentFolder.domElements.splice(index, 1);
+
+    Browser.get().getBookmarkBar().refreshBoookmarBar();
+}); 
+
 
 window.addEventListener('contextmenu', (event) => 
 {
