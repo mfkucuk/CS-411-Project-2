@@ -23,6 +23,8 @@ Then, you can start the application using the following command:
 npm start
 ```
 
+<kbd>→</kbd> and <kbd>←</kbd> can be used to alternate between the mockup web pages.
+
 # Project Structure
 *index.js* is the file required to run the electron framework. It is responsible for creating a window and rendering the HTML (*index.html*) in that window.
 
