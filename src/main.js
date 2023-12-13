@@ -7,6 +7,7 @@ import { Folder } from './Folder.js';
  
 window.onload = () => {
 
+    Browser.get().initPages(pages);
     Browser.get().open(pages[pageIndex]);
 
     const addButton = document.getElementById('addBookmarkBtn');

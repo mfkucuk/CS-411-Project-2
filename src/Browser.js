@@ -55,4 +55,10 @@ export class Browser {
 
         document.getElementById('pageContainer').appendChild(page.content);
     }
+
+    initPages(pages) {
+        pages.forEach(page => {
+            this.allPages[page.url] = page;
+        });
+    }
 }
