@@ -6,10 +6,12 @@ const createWindow = () => {
         height: 720,
         webPreferences: {
             nodeIntegration: true
-        }
+        },
+        icon: 'src/favicon/favicon.ico',
     })
 
     win.loadFile('index.html')
+    win.setMenu(null);
 }
 
 app.whenReady().then(() => {

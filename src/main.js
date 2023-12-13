@@ -58,13 +58,25 @@ export function togglePopup() {
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
-export function renamePopup() {
+export function renamePopup(event) {
     const popupContainer = document.getElementById('renameContainer');
+
+    if (typeof event != 'undefined') 
+    {
+        popupContainer.style.left = event.clientX + 'px';
+        popupContainer.style.top = event.clientY + 'px';
+    }
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
-export function iconPopup() {
+export function iconPopup(event) {
     const popupContainer = document.getElementById('iconContainer');
+
+    if (typeof event != 'undefined') 
+    {
+        popupContainer.style.left = (event.clientX + 30) + 'px';
+        popupContainer.style.top = (event.clientY + 50) + 'px';
+    }
     popupContainer.style.display = (popupContainer.style.display === 'none' || popupContainer.style.display === '') ? 'block' : 'none';
 }
 
@@ -92,7 +104,7 @@ let pageIndex = 0;
     mainPageContent.style.backgroundColor = "#EEEEEE";
     
     let h1 = document.createElement('h1');
-    h1.innerText = 'Flare';
+    h1.innerText = 'Flare 🔅';
 
     let p1 = document.createElement('p');
     p1.innerText = 'Welcome To Flare Browser';

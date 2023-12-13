@@ -1,5 +1,6 @@
 import { Browser } from "./Browser.js";
 import { renamePopup } from "./main.js";
+import { iconPopup } from "./main.js";
 
 export class BookmarkBar {
     constructor() {
@@ -254,7 +255,6 @@ export class BookmarkBar {
         let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
         currentFolder.domElements.forEach(ele => {
-            console.log(ele);
             this.domElement.appendChild(ele);
         });
     }
@@ -304,7 +304,7 @@ function hideCustomContextMenu()
     customContextMenu.style.display = 'none';
 }
 
-document.getElementById('deleteOption').addEventListener('click', () => {
+document.getElementById('deleteOption').addEventListener('click', (event) => {
 
     console.log(chosenElement);
 
@@ -319,19 +319,29 @@ document.getElementById('deleteOption').addEventListener('click', () => {
 
 }); 
 
-document.getElementById('renameBtn').addEventListener('click', () => {
+document.getElementById('renameBtn').addEventListener('click', (event) => {
 
     let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
     const index = currentFolder.domElements.indexOf(chosenElement);   
 
-    chosenElement.textContent = document.getElementById('renamedTitle').value;
+    const unicodeValue = chosenElement.textContent.charCodeAt(0);
+ 
+    if(emojis.map(char => char.charCodeAt(0)).includes(unicodeValue)){
+        chosenElement.textContent = chosenElement.textContent.substring(0, 3);
+        chosenElement.textContent += document.getElementById('renamedTitle').value;
+        currentFolder.domElements[index].name += document.getElementById('renamedTitle').value;
+    }
+    else 
+    {
+        chosenElement.textContent = document.getElementById('renamedTitle').value;
+        currentFolder.domElements[index].name = document.getElementById('renamedTitle').value;
+    }
 
-    currentFolder.domElement[index].name = document.getElementById('renamedTitle').value;
 
     document.getElementById('renamedTitle').value = "";
 
-    this.renamePopup();
+    renamePopup();
 
     Browser.get().getBookmarkBar().refreshBoookmarBar();
     chosenElement = null;
@@ -347,12 +357,9 @@ let emoButtons = Array.from(document.getElementsByClassName('emoBtn'));
 emoButtons.forEach(btn => {
     btn.addEventListener('click', () => {
 
-        console.log(chosenElement);
         let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
     
         const index = currentFolder.domElements.indexOf(chosenElement);
-    
-        window.alert(typeof emojis[0])
 
         let id = btn.id;
         id = id.substring(5);
@@ -360,18 +367,16 @@ emoButtons.forEach(btn => {
 
         const unicodeValue = chosenElement.textContent.charCodeAt(0);
 
-        window.alert(chosenElement.textContent[0]);
         if(emojis.map(char => char.charCodeAt(0)).includes(unicodeValue)){
             chosenElement.textContent = chosenElement.textContent.substring(2);
             chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
-            currentFolder.domElement[index].name =  chosenElement.textContent;
+            currentFolder.domElements[index].name =  chosenElement.textContent;
         } else {
             chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
-            currentFolder.domElement[index].name =  chosenElement.textContent;
+            currentFolder.domElements[index].name =  chosenElement.textContent;
         }
-        
-        this.iconPopup();
 
+        iconPopup();
         Browser.get().getBookmarkBar().refreshBoookmarBar();
         chosenElement = null;
 
