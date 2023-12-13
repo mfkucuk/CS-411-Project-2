@@ -8,6 +8,7 @@ const createWindow = () => {
             nodeIntegration: true
         },
         icon: 'src/favicon/favicon.ico',
+        resizable: false,
     })
 
     win.loadFile('index.html')

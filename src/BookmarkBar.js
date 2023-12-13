@@ -51,8 +51,6 @@ export class BookmarkBar {
                 let element = currentFolder.elements.splice(indexOfDragged, 1);
                 currentFolder.domElements.splice(indexOfDragged, 1);
 
-                console.log(element);
-
                 Browser.get().getOrganizerWindow().currentFolder.folder.addElement(element[0]);
 
                 this.refreshBoookmarBar();
@@ -325,6 +323,7 @@ document.getElementById('deleteOption').addEventListener('click', (event) => {
     const index = currentFolder.domElements.indexOf(chosenElement);
 
     currentFolder.domElements.splice(index, 1);
+    currentFolder.elements.splice(index, 1);
 
     Browser.get().getBookmarkBar().refreshBoookmarBar();
     chosenElement = null;
@@ -384,10 +383,10 @@ emoButtons.forEach(btn => {
         if(emojis.map(char => char.charCodeAt(0)).includes(unicodeValue)){
             chosenElement.textContent = chosenElement.textContent.substring(2);
             chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
-            currentFolder.domElements[index].name =  chosenElement.textContent;
+            currentFolder.elements[index].name =  chosenElement.textContent;
         } else {
             chosenElement.textContent = emojis[i] + " " + chosenElement.textContent;
-            currentFolder.domElements[index].name =  chosenElement.textContent;
+            currentFolder.elements[index].name =  chosenElement.textContent;
         }
 
         iconPopup();

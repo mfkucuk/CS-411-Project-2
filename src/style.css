@@ -262,3 +262,15 @@ background-color: #ddd;
 .emoBtn:hover{
     background-color:#ddd;
 }
+
+#loginContainer {
+    display: block;
+    position: fixed;
+    top: 85%;
+    left: 75%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}

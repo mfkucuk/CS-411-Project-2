@@ -2,6 +2,7 @@ import { Page } from './Page.js';
 import { Browser } from './Browser.js';
 import { Bracket } from './Bracket.js';
 import { Bookmark } from './Bookmark.js';
+import { Folder } from './Folder.js';
 
  
 window.onload = () => {
@@ -20,6 +21,7 @@ window.onload = () => {
     const returnBtn = document.getElementById('returnBtn');
     const renameBtn = document.getElementById('renameOption');
     const iconBtn = document.getElementById('iconOption');
+    const loginBtn = document.getElementById('loginBtn');
 
 
     addButton.addEventListener('click', (event) => {
@@ -49,7 +51,77 @@ window.onload = () => {
     returnBtn.onclick = goBack;
     iconBtn.onclick = iconPopup;
     closeIconPopupBtn.onclick = iconPopup;
+    loginBtn.onclick = login;
 
+}
+
+function iterateFolder(folder) 
+{
+    let array = [];
+
+    folder.elements.forEach(element => {
+        let type;
+        let url;
+
+        if (element instanceof Bookmark) 
+        {
+            type = 'bookmark';
+            url = element.url;
+            array.push( { name: element.name, type: type, url: url } );
+
+        }
+        else if (element instanceof Folder) 
+        {
+            type = 'folder';
+            array.push({ name: element.name, type: type });
+        }
+        else 
+        {
+            type = 'bracket';
+            array.push( { name: element.name, type: type } );
+        }
+    });
+
+    return array;
+}
+
+function login() 
+{
+    
+    const email = document.getElementById('loginText').value;
+    
+    if (email == '') 
+    {
+        alert('invalid email!');
+        return;
+    }
+    
+    if (Browser.get().currentUser) {
+        
+        let array = iterateFolder(Browser.get().getOrganizerWindow().rootFolder);
+
+        localStorage.setItem(Browser.get().currentUser, JSON.stringify(array))
+    }
+
+    Browser.get().currentUser = email;
+
+    console.log(email);
+    console.log(localStorage.getItem(email));
+
+    Browser.get().getOrganizerWindow().rootFolder.elements = [];
+    Browser.get().getOrganizerWindow().rootFolder.domElements = [];
+
+    if (localStorage.getItem(email)) 
+    {
+        let array = JSON.parse(localStorage.getItem(email));
+        Browser.get().getOrganizerWindow().rootFolder.createElementFromType(array);
+        Browser.get().getOrganizerWindow().rootFolder.createDomFromElements();
+    }
+
+    Browser.get().getOrganizerWindow().currentFolder = Browser.get().getOrganizerWindow().rootFolder;
+    Browser.get().getBookmarkBar().refreshBoookmarBar();
+
+    console.log(Browser.get().getOrganizerWindow().rootFolder.elements);
 
 }
 
@@ -145,21 +217,6 @@ let pageIndex = 0;
 /////////////////////////////////////////////////
 
 
-let page1Content = document.createElement('div');
-page1Content.style.backgroundColor = "#00FF00";
-
-let page1 = new Page('page1', page1Content);
-
-let page2Content = document.createElement('div');
-page2Content.style.backgroundColor = "#0000FF";
-
-let page2 = new Page('page2', page2Content);
-
-let page3Content = document.createElement('div');
-page3Content.style.backgroundColor = "#FFFF00";
-
-let page3 = new Page('page3', page3Content);
-
 window.addEventListener('keydown', (event) => {
     if (event.key == 'ArrowRight') {
         pageIndex++;
@@ -170,5 +227,18 @@ window.addEventListener('keydown', (event) => {
         pageIndex--;
         pageIndex = Math.max(pageIndex, 0);
         Browser.get().open(pages[pageIndex]);
+    }
+    else if (event.key == 'F10') 
+    {
+        localStorage.clear();
+    }
+});
+
+window.addEventListener('beforeunload', () => {
+    if (Browser.get().currentUser) {
+        
+        let array = iterateFolder(Browser.get().getOrganizerWindow().rootFolder);
+
+        localStorage.setItem(Browser.get().currentUser, JSON.stringify(array))
     }
 });

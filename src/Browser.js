@@ -7,6 +7,8 @@ export class Browser {
         this.bookmarkBar = new BookmarkBar();
         this.organizerWindow = new BookmarkOrganizerWindow();
 
+        this.currentUser = null;
+
         this.currentPage = null;
         this.allPages = {};
     }

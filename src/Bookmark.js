@@ -1,11 +1,10 @@
 import { BookmarkExplorerElement } from './BookmarkExplorerElement.js';
 
 export class Bookmark extends BookmarkExplorerElement {
-    constructor(url, name, icon) {
+    constructor(url, name) {
 
         super(name);
 
         this.url = url;
-        this.icon = icon;
     }
 }
