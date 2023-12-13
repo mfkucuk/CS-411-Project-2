@@ -62,10 +62,16 @@ export class BookmarkBar {
 
     show() {
         this.visible = true;
-    }
 
+        const bar = document.getElementById('bookmarkBarContainer');
+        bar.style.display = 'flex';
+    }
+    
     hide() {
         this.visible = false;
+        
+        const bar = document.getElementById('bookmarkBarContainer');
+        bar.style.display = 'none';
     }
 
 
@@ -93,8 +99,6 @@ export class BookmarkBar {
         }
 
         //Browser.get().getOrganizerWindow().currentFolder.addElement();
-
-        console.log('add visual folder 1')
         const folderButton = document.createElement('button');
         folderButton.className = 'folder';
         folderButton.textContent = folder.name;
@@ -111,8 +115,6 @@ export class BookmarkBar {
             event.dataTransfer.setData("text", event.target.id);
         });
 
-
-        console.log('add visual folder 2')
         this.domElement.appendChild(folderButton);
         this.elementList.push(folderButton);
     }
@@ -266,32 +268,42 @@ function showCustomContextMenu(event) {
     event.preventDefault();
 
     // Show the custom context menu at the cursor position
-
-    if (event.target.className != 'bookmark' && event.target.className != 'folder'
-     && event.target.className != 'bookmark-bracket') 
-     {
-        return;
-    }
-    
+    const option1 = document.getElementById('deleteOption');
     const option2 = document.getElementById('renameOption');
     const option3 = document.getElementById('iconOption');
-    if (event.target.className == 'bookmark-bracket') 
-    {
-        option2.style.display = 'none';
-        option3.style.display = 'none';
-    }
-    else 
-    {
-        option2.style.display = 'block';
-        option3.style.display = 'block';
-    }
-
-    chosenElement = event.target;
+    const option4 = document.getElementById('hideBookmark');
 
     const customContextMenu = document.getElementById('menu');
     customContextMenu.style.left = event.clientX + 'px';
     customContextMenu.style.top = event.clientY + 'px';
     customContextMenu.style.display = 'block';
+
+    if (event.target.className != 'bookmark' && event.target.className != 'folder'
+     && event.target.className != 'bookmark-bracket') 
+    {
+        option1.style.display = 'none';
+        option2.style.display = 'none';
+        option3.style.display = 'none';
+        option4.style.display = 'block';
+
+        customContextMenu.style.display = 'block';
+
+        return;
+    }
+    
+
+    option1.style.display = 'block';
+    option2.style.display = 'block';
+    option3.style.display = 'block';
+    option4.style.display = 'none';
+
+    if (event.target.className == 'bookmark-bracket') 
+    {
+        option2.style.display = 'none';
+        option3.style.display = 'none';
+    }
+
+    chosenElement = event.target;
 
     // Set a data attribute to identify the target element
     //customContextMenu.setAttribute('data-target-element', event.target.id);
@@ -329,13 +341,15 @@ document.getElementById('renameBtn').addEventListener('click', (event) => {
  
     if(emojis.map(char => char.charCodeAt(0)).includes(unicodeValue)){
         chosenElement.textContent = chosenElement.textContent.substring(0, 3);
+        currentFolder.elements[index].name = chosenElement.textContent.substring(0, 3);
+
         chosenElement.textContent += document.getElementById('renamedTitle').value;
-        currentFolder.domElements[index].name += document.getElementById('renamedTitle').value;
+        currentFolder.elements[index].name += document.getElementById('renamedTitle').value;
     }
     else 
     {
         chosenElement.textContent = document.getElementById('renamedTitle').value;
-        currentFolder.domElements[index].name = document.getElementById('renamedTitle').value;
+        currentFolder.elements[index].name = document.getElementById('renamedTitle').value;
     }
 
 
@@ -381,6 +395,15 @@ emoButtons.forEach(btn => {
         chosenElement = null;
 
     });
+});
+
+document.getElementById('hideBookmark').addEventListener('click', (event) => {
+    if (Browser.get().getBookmarkBar().visible) {
+        Browser.get().getBookmarkBar().hide();
+    }
+    else {
+        Browser.get().getBookmarkBar().show();
+    }
 });
 
 
