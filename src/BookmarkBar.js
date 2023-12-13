@@ -316,8 +316,6 @@ function hideCustomContextMenu()
 
 document.getElementById('deleteOption').addEventListener('click', (event) => {
 
-    console.log(chosenElement);
-
     let currentFolder = Browser.get().getOrganizerWindow().currentFolder;
 
     const index = currentFolder.domElements.indexOf(chosenElement);

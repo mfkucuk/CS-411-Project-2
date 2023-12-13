@@ -105,9 +105,6 @@ function login()
 
     Browser.get().currentUser = email;
 
-    console.log(email);
-    console.log(localStorage.getItem(email));
-
     Browser.get().getOrganizerWindow().rootFolder.elements = [];
     Browser.get().getOrganizerWindow().rootFolder.domElements = [];
 
@@ -120,9 +117,6 @@ function login()
 
     Browser.get().getOrganizerWindow().currentFolder = Browser.get().getOrganizerWindow().rootFolder;
     Browser.get().getBookmarkBar().refreshBoookmarBar();
-
-    console.log(Browser.get().getOrganizerWindow().rootFolder.elements);
-
 }
 
 export function togglePopup() {
