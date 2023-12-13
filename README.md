@@ -22,4 +22,6 @@ npm start
 ```
 
 # Project Structure
-*index.js* is the file required to run the electron
+*index.js* is the file required to run the electron framework. It is responsible for creating a window and rendering the HTML (*index.html*) in that window.
+
+All of our source code is located under the *src* directory. It contains our JavaScript files that handles the web browser logic and CSS file for styling the HTML.
