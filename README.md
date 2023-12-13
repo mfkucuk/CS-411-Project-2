@@ -5,7 +5,7 @@ Mehmet Feyyaz Küçük - 22003550
 13/12/2023
 
 # Project Description
-This projects attempts to build a bookmark feature that is better than other web browsers with the new web browser, Flare. The project only implements the bookmark feature with a slighthly different approach than other browsers that prioritizes functionality. 
+This projects attempts to build a bookmark feature that is better than other web browsers with the new web browser, Flare. The project only implements the bookmark feature with a slightly different approach than other browsers that prioritizes functionality. 
 
 # How to run the code
 
